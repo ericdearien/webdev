@@ -1,0 +1,29 @@
+{
+  "name": "webdev",
+  "version": "1.0.0",
+  "description": "My semester project for web development",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development node src/app.js",
+    "start:production": "cross-env NODE_ENV=production node src/app.js",
+    "start:test": "cross-env NODE_ENV=test node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericdearien/webdev.git"
+  },
+  "author": "Eric Dearien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ericdearien/webdev/issues"
+  },
+  "homepage": "https://github.com/ericdearien/webdev#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
