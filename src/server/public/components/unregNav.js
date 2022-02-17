@@ -7,10 +7,13 @@ class UnregisteredNav extends HTMLElement {
         this.innerHTML = `
             <nav class="stanNav">
               <ul>
-                <li class="left">
+                <li>
                   <brand-component></brand-component>
                 </li>
-                <li class="right">
+                <li>
+                  <a href="/">Home</a>
+                </li>
+                <li>
                   <a href="/login">Login</a>
                 </li>
               </ul>
