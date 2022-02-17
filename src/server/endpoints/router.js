@@ -4,7 +4,7 @@ const router = express();
 
 router.get("/", endpoints.Home);
 router.get("/home", endpoints.Home);
-router.get("/login", endpoints.Home);
-router.get("/register", endpoints.Home);
+router.get("/login", endpoints.Login);
+router.get("/register", endpoints.Register);
 
 module.exports = router;
