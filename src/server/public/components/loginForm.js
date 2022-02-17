@@ -9,7 +9,7 @@ class LoginForm extends HTMLElement {
             <p class="form-title">Log In</p>
             <hr>
             <br>
-            <form class="form">
+            <form class="form" method="POST" action="/validateLogin">
                 <label for="email">Email</label>
                 <input type="text" placeholder="example@gmail.com" required name="email"/>
                 <label for="pword">Password</label>

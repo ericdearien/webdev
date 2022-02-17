@@ -19,3 +19,11 @@ module.exports.Register = function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream(path.join(__dirname, '../public/pages/register.html')).pipe(res);
 }
+
+module.exports.Logout = function (req, res) {
+    //TODO: make this function
+}
+
+module.exports.ValidateLogin = function (req, res) {
+    //TODO: make this function
+}
