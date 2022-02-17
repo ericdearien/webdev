@@ -4,9 +4,9 @@
   "description": "My semester project for web development",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node src/app.js",
-    "start:production": "cross-env NODE_ENV=production node src/app.js",
-    "start:test": "cross-env NODE_ENV=test node src/app.js"
+    "start": "cross-env NODE_ENV=development nodemon src/server/server.js",
+    "start:production": "cross-env NODE_ENV=production nodemon src/server/server.js",
+    "start:test": "cross-env NODE_ENV=test nodemon src/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "mysql2": "^2.3.3"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.15"
   }
 }
