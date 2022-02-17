@@ -7,3 +7,5 @@ I have no idea what to call it so for now I'll call it "Junker"
 
 # ASSIGNMENT 3
 The login and registration pages can be found either in src/server/public/pages or can be viewed by running the application and going to localhost:10000 and clicking on the login button. If you want to see some of the custom html elements that I used, see src/server/public/components. Styles are in src/server/public/styles.
+
+I forgot to mention, but to run the server use 'npm run start'
