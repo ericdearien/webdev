@@ -5,8 +5,8 @@ class Sidebar extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
-            <div>
-
+            <div class='sidebar'>
+                
             </div>
         `;
     }

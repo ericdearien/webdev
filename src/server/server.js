@@ -1,4 +1,4 @@
-const router =  require('./endpoints/router.js');
+const router = require('./endpoints/router.js');
 const express = require('express');
 const path = require('path');
 const config = require("../config/config.json");
@@ -10,3 +10,4 @@ router.use(express.static(path.join(__dirname, 'public')));
 router.listen(configuration.port, () => {
     console.log(`App running on port ${configuration.port}`);
 });
+ 

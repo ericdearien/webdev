@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    font-family: "Roboto", sans-serif;
     padding: 0;
     box-sizing: border-box;
 }
@@ -65,7 +66,6 @@ nav ul {
 /* FORMS */
 
 .form input {
-    font-family: "Roboto", sans-serif;
     outline: 0;
     background: #f2f2f2;
     width: 100%;
@@ -77,10 +77,9 @@ nav ul {
 }
 
 .form button {
-    font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;
-    background: #4CAF50;
+    background: rgb(30, 114, 58);
     width: 100%;
     border: 0;
     padding: 15px;
@@ -102,7 +101,7 @@ nav ul {
 }
 
 .form .message a {
-    color: #4CAF50;
+    color: rgb(30, 114, 58);
     text-decoration: none;
 }
 
@@ -125,4 +124,72 @@ nav ul {
     color: #333;
     font-size: x-large;
     padding-bottom: 4px;
+}
+
+/* TABLES */
+.general-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.general-table thead tr {
+    background-color: rgb(30, 114, 58);
+    color: #f2f2f2;
+    text-align: left;
+}
+
+.general-table th,
+.general-table td {
+    padding: 12px 15px;
+}
+
+.general-table tbody tr {
+    border-bottom: thin solid gray;
+}
+
+.general-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.general-table tbody tr:last-of-type {
+    border-bottom: 2px solid #333;
+}
+
+/* buttons */
+.general-button {
+    outline: 0;
+    background: rgb(30, 114, 58);
+    width:auto;
+    border: 0;
+    padding: 10px;
+    margin: 20px;
+    color: #f2f2f2;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.general-button:hover, .general-button:active {
+    background: #43A047;
+}
+
+.table-button {
+    outline: 0;
+    width: 80px;
+    background: rgb(30, 114, 58);
+    border: 0;
+    color: #f2f2f2;
+    padding: 3px;
+    border-radius: 2px;
+}
+
+.general-text-input {
+    background: #f2f2f2;
+    width: 100%;
+    padding: 5px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-size: 14px;
 }

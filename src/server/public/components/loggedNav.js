@@ -11,8 +11,11 @@ class LoggedNav extends HTMLElement {
                   <brand-component></brand-component>
                 </li>
                 <li>
-                  <a href="/">Home</a>
+                  <a href="/home">Home</a>
                 </li>
+                <li>
+                  <a href="/viewdecks">My Decks</a>
+                </li>   
                 <li>
                   <a href="/logout">Logout</a>
                 </li>
