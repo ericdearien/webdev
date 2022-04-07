@@ -16,62 +16,68 @@
 <body>
     <loggednav-component></loggednav-component>
     <main>
-        <!-- deck table -->
-        <table id="deckTable" class="general-table">
-            <thead>
-                <tr>
-                    <!-- The order of these is subject to change -->
-                    <th>Name</th>
-                    <!-- TODO: the # cards section will need to be populated from the database -->
-                    <th># Cards</th>
-                    <th>Cards Due Today</th>
-                    <th>Last Studied</th>
-                    <th>Created By</th>
-                    <th>Created On</th>
-                    <th>Study</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- TODO: THESE ARE PLACEHOLDERS, EVENTUALLY THIS DATA WILL COME FROM DATABASE -->
-                <tr>
-                    <td>My First Deck!</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>4/3/2022</td>
-                    <td>Eric Dearien</td>
-                    <td>4/3/2022</td>
-                    <td><a href="./study?deckID=1"><i class="fa fa-graduation-cap" aria-hidden="true"></a></i></td>
-                    <td><a href="./editDeck?deckID=3"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i></td>
-                    <td><a><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
-                </tr>
-                <tr>
-                    <td>My Second Deck!</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>4/4/2022</td>
-                    <td>Eric Dearien</td>
-                    <td>4/3/2022</td>
-                    <td><a href="./study?deckID=2"><i class="fa fa-graduation-cap" aria-hidden="true"></a></i></td>
-                    <td><a href="./editDeck?deckID=3"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i></td>
-                    <td><a><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
-                </tr>
-                <tr>
-                    <td>My Third Deck!</td>
-                    <td>10</td>
-                    <td>5</td>
-                    <td>4/5/2022</td>
-                    <td>Eric Dearien</td>
-                    <td>4/3/2022</td>
-                    <td><a href="./study?deckID=3"><i class="fa fa-graduation-cap" aria-hidden="true"></a></i></td>
-                    <td><a href="./editDeck?deckID=3"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i></td>
-                    <td><a><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
-                </tr>
-            </tbody>
-        </table>
-        <button id="NewDeckButton" class="general-button" onclick="AppendTableRow('deckTable');">Create a New
-            Deck</button>
+        <div class="table-container">
+            <!-- deck table -->
+            <table id="deckTable" class="general-table">
+                <thead>
+                    <tr>
+                        <!-- The order of these is subject to change -->
+                        <th>Name</th>
+                        <!-- TODO: the # cards section will need to be populated from the database -->
+                        <th># Cards</th>
+                        <th>Cards Due Today</th>
+                        <th>Last Studied</th>
+                        <th>Created By</th>
+                        <th>Created On</th>
+                        <th>Study</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TODO: THESE ARE PLACEHOLDERS, EVENTUALLY THIS DATA WILL COME FROM DATABASE -->
+                    <tr>
+                        <td>My First Deck!</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>4/3/2022</td>
+                        <td>Eric Dearien</td>
+                        <td>4/3/2022</td>
+                        <td><a href="./study?deckID=1"><i class="fa fa-graduation-cap" aria-hidden="true"></a></i></td>
+                        <td><a href="./editDeck?deckID=3"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>
+                        </td>
+                        <td><a><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
+                    </tr>
+                    <tr>
+                        <td>My Second Deck!</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>4/4/2022</td>
+                        <td>Eric Dearien</td>
+                        <td>4/3/2022</td>
+                        <td><a href="./study?deckID=2"><i class="fa fa-graduation-cap" aria-hidden="true"></a></i></td>
+                        <td><a href="./editDeck?deckID=3"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>
+                        </td>
+                        <td><a><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
+                    </tr>
+                    <tr>
+                        <td>My Third Deck!</td>
+                        <td>10</td>
+                        <td>5</td>
+                        <td>4/5/2022</td>
+                        <td>Eric Dearien</td>
+                        <td>4/3/2022</td>
+                        <td><a href="./study?deckID=3"><i class="fa fa-graduation-cap" aria-hidden="true"></a></i></td>
+                        <td><a href="./editDeck?deckID=3"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>
+                        </td>
+                        <td><a><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button id="NewDeckButton" class="general-button" onclick="AppendTableRow('deckTable');">Create a New
+                Deck</button>
+        </div>
+
     </main>
 </body>
 
