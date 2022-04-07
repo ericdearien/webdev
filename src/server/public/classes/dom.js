@@ -63,7 +63,7 @@ function createNewDeck(id) {
     var c7 = row.insertCell(6);
     c7.innerHTML = `<a href="./study?deckID=3"><i class="fa fa-graduation-cap" aria-hidden="true">`;
     var c8 = row.insertCell(7);
-    c8.innerHTML = `<a><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
+    c8.innerHTML = `<a href="./editDeck?deckID=3><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
     var c9 = row.insertCell(8);
     c9.innerHTML = `<a><i class="fa fa-trash-o" aria-hidden="true"></a>`;
 }

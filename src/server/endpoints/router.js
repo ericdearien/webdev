@@ -9,7 +9,8 @@ router.get("/register", endpoints.Register);
 router.get("/account", endpoints.Account);
 router.get("/viewdecks", endpoints.ViewDecks);
 router.get("/lessons", endpoints.Lessons);
-router.get("/study", endpoints.Study)
+router.get("/study", endpoints.Study);
+router.get("/editDeck", endpoints.EditDeckPage);
 
 //logout should probably be post?
 router.get("/logout", endpoints.Logout);
