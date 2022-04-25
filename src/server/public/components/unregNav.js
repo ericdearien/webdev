@@ -14,7 +14,7 @@ class UnregisteredNav extends HTMLElement {
                   <a href="/">Home</a>
                 </li>
                 <li>
-                  <a href="/login">Login</a>
+                  <a href="/loginPage">Login</a>
                 </li>
               </ul>
             </nav>

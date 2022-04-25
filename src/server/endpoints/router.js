@@ -2,19 +2,29 @@ const endpoints = require('./endpoints.js');
 const express = require("express");
 const router = express();
 
+//GET
 router.get("/", endpoints.Home);
+router.get("/loginPage", endpoints.LoginPage);
 router.get("/home", endpoints.LandingPage);
-router.get("/login", endpoints.Login);
-router.get("/register", endpoints.Register);
 router.get("/account", endpoints.Account);
 router.get("/viewdecks", endpoints.ViewDecks);
 router.get("/lessons", endpoints.Lessons);
 router.get("/study", endpoints.Study);
-router.get("/editDeck", endpoints.EditDeckPage);
+router.get("/deck/get", endpoints.GetDeck);
+router.get("/registerPage", endpoints.RegisterPage);
 
-//logout should probably be post?
-router.get("/logout", endpoints.Logout);
-router.post("/validateLogin", endpoints.ValidateLogin);
+//POST
+router.post("/login", endpoints.Login);
+router.post("/register", endpoints.Register);
+router.post("/logout", endpoints.Logout);
 router.post("/createDeck", endpoints.CreateDeck);
+
+//DELETE
+router.post("/user/delete", endpoints.DeleteUser);
+router.post("/deck/delete", endpoints.DeleteDeck);
+
+//UPDATE
+router.post("/user/update", endpoints.UpdateUser);
+router.post("/deck/update", endpoints.EditDeckPage);
 
 module.exports = router; 

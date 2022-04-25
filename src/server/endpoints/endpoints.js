@@ -1,24 +1,39 @@
 //This file contains all of the endpoint handlers for our server
 const path = require('path');
 const fs = require('fs');
-const user = require('../public/classes/user');
+const User = require('../models/userModel');
+const Lesson = require('../models/lessonModel');
+const Deck = require('../models/deckModel');
+const Card = require('../models/cardModel');
 
 module.exports.Home = function (req, res) {
-    //TODO: this filepath should be made more reliable in case i change the file system
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream(path.join(__dirname, '../public/pages/home.html')).pipe(res);
 }
 
-module.exports.Login = function (req, res) {
-    //TODO: this filepath should be made more reliable in case i change the file system
+
+module.exports.RegisterPage = function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    fs.createReadStream(path.join(__dirname, '../public/pages/login.html')).pipe(res);
+    fs.createReadStream(path.join(__dirname, '../public/pages/register.html')).pipe(res);
+}
+
+module.exports.Login = async function (req, res) {
+    try {
+        console.log('trying to log in')
+        const user = await User.login(req.body.username, req.body.password);
+        res.send({...user, password: undefined});
+      } catch (error) {
+        res.status(401).send({message: error.message});
+      }
 }
 
 module.exports.Register = function (req, res) {
-    //TODO: this filepath should be made more reliable in case i change the file system
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    fs.createReadStream(path.join(__dirname, '../public/pages/register.html')).pipe(res);
+    try {
+        const user = User.register(req.body);
+        res.send({...user, password: undefined})
+      } catch(error) {
+        res.status(401).send({message: error.message});
+      }
 }
 
 module.exports.Account = function (req, res) {
@@ -27,15 +42,8 @@ module.exports.Account = function (req, res) {
 }
 
 module.exports.Logout = function (req, res) {
-    //TODO: make this function log out of session after sessions are implemented, for now just passes back to home page
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    fs.createReadStream(path.join(__dirname, '../public/pages/home.html')).pipe(res);
-}
-
-module.exports.ValidateLogin = function (req, res) {
-    //TODO: create function to validate the login, for now this just passes through
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    fs.createReadStream(path.join(__dirname, '../public/pages/landing.html')).pipe(res);
+    localStorage.removeItem('user');
+    window.location.href = "/";
 }
 
 //Page you see immediately after logging in
@@ -77,7 +85,44 @@ module.exports.Study = function (req, res) {
 }
 
 module.exports.CreateDeck = function (req, res) {
+    try {
+        Deck.newDeck(req.body.name, req.body.date);
+      } catch(error) {
+        res.status(401).send({message: error.message});
+      }
+}
+module.exports.GetDeck = function (req, res) {
     //This will eventually be connected to the db to create a deck
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream(path.join(__dirname, '../public/pages/decks.html')).pipe(res);
+}
+module.exports.DeleteUser = function (req, res) {
+    try {
+        User.deleteUser(req.body.userId);
+      } catch(error) {
+        res.status(401).send({message: error.message});
+      }
+}
+
+
+module.exports.LoginPage = function (req, res) {
+    //This will eventually be connected to the db to create a deck
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    fs.createReadStream(path.join(__dirname, '../public/pages/login.html')).pipe(res);
+}
+
+module.exports.DeleteDeck = function (req, res) {
+    try {
+        Deck.DeleteDeck(req.body.userId);
+      } catch(error) {
+        res.status(401).send({message: error.message});
+      }
+}
+module.exports.UpdateUser = function (req, res) {
+    try {
+        const user = User.editUser(req.body);
+        res.send({...user, password: undefined});
+      } catch(error) {
+        res.status(401).send({message: error.message})
+      }
 }
