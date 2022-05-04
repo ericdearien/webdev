@@ -1,10 +1,11 @@
-class LoggedNav extends HTMLElement {
-    constructor() {
-        super();
-    }
 
-    connectedCallback() {
-        this.innerHTML = `
+class LoggedNav extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    this.innerHTML = `
             <nav class="stanNav">
               <ul>
                 <li>
@@ -16,13 +17,13 @@ class LoggedNav extends HTMLElement {
                 <li>
                   <a href="/viewdecks">My Decks</a>
                 </li>   
-                <li>
-                  <a href="/logout">Logout</a>
+                <li onclick='logout()'>
+                  <a>Logout</a>
                 </li>
               </ul>
             </nav>
         `;
-    }
+  }
 }
 
 customElements.define("loggednav-component", LoggedNav)

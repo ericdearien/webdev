@@ -24,7 +24,7 @@ router.post("/user/delete", endpoints.DeleteUser);
 router.post("/deck/delete", endpoints.DeleteDeck);
 
 //UPDATE
-router.post("/user/update", endpoints.UpdateUser);
+// router.post("/user/update", endpoints.UpdateUser);
 router.post("/deck/update", endpoints.EditDeckPage);
 
 module.exports = router; 

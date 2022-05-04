@@ -20,20 +20,25 @@ module.exports.RegisterPage = function (req, res) {
 module.exports.Login = async function (req, res) {
     try {
         console.log('trying to log in')
+        console.log(req.body)
         const user = await User.login(req.body.username, req.body.password);
-        res.send({...user, password: undefined});
-      } catch (error) {
-        res.status(401).send({message: error.message});
-      }
+        res.send({ ...user, password: undefined });
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
 }
 
 module.exports.Register = function (req, res) {
     try {
+        console.log('trying to register')
+        console.log(req.body)
         const user = User.register(req.body);
-        res.send({...user, password: undefined})
-      } catch(error) {
-        res.status(401).send({message: error.message});
-      }
+        res.send({ ...user, password: undefined })
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
 }
 
 module.exports.Account = function (req, res) {
@@ -43,7 +48,9 @@ module.exports.Account = function (req, res) {
 
 module.exports.Logout = function (req, res) {
     localStorage.removeItem('user');
+    console.log('logging out')
     window.location.href = "/";
+
 }
 
 //Page you see immediately after logging in
@@ -87,9 +94,9 @@ module.exports.Study = function (req, res) {
 module.exports.CreateDeck = function (req, res) {
     try {
         Deck.newDeck(req.body.name, req.body.date);
-      } catch(error) {
-        res.status(401).send({message: error.message});
-      }
+    } catch (error) {
+        res.status(401).send({ message: error.message });
+    }
 }
 module.exports.GetDeck = function (req, res) {
     //This will eventually be connected to the db to create a deck
@@ -99,9 +106,9 @@ module.exports.GetDeck = function (req, res) {
 module.exports.DeleteUser = function (req, res) {
     try {
         User.deleteUser(req.body.userId);
-      } catch(error) {
-        res.status(401).send({message: error.message});
-      }
+    } catch (error) {
+        res.status(401).send({ message: error.message });
+    }
 }
 
 
@@ -114,15 +121,15 @@ module.exports.LoginPage = function (req, res) {
 module.exports.DeleteDeck = function (req, res) {
     try {
         Deck.DeleteDeck(req.body.userId);
-      } catch(error) {
-        res.status(401).send({message: error.message});
-      }
+    } catch (error) {
+        res.status(401).send({ message: error.message });
+    }
 }
 module.exports.UpdateUser = function (req, res) {
     try {
         const user = User.editUser(req.body);
-        res.send({...user, password: undefined});
-      } catch(error) {
-        res.status(401).send({message: error.message})
-      }
+        res.send({ ...user, password: undefined });
+    } catch (error) {
+        res.status(401).send({ message: error.message })
+    }
 }

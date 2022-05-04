@@ -9,11 +9,11 @@ class LoginForm extends HTMLElement {
             <p class="form-title">Log In</p>
             <hr>
             <br>
-            <form class="form" method="POST" action="/login">
+            <form class="form" onsubmit='login()'>
                 <label for="username">Email</label>
-                <input type="text" placeholder="example@gmail.com" required name="username"/>
+                <input type="text" placeholder="example@gmail.com" required id='username' name="username" />
                 <label for="password">Password</label>
-                <input type="password" placeholder="12345..." required name="password"/>
+                <input type="password" placeholder="12345..." required id='password' name="password"/>
                 <button>login</button>
                 <p class="message">Not registered? <a href="/registerPage">Create an account</a></p>
             </form>

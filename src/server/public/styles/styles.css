@@ -21,6 +21,7 @@ nav ul {
     margin: 0px;
     padding: 0;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .stanNav {
