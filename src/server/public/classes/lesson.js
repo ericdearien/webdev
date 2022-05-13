@@ -1,10 +1,12 @@
 let helpers = require("./helpers.js");
 
-class User {
-    constructor(id, name, desc) {
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
+class Lesson {
+    constructor(id, name, desc, created_by) {
+        this.ID = id;
+        this.title = name;
+        this.body = desc;
+        this.created_by = created_by;
+        this.created_on = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate()
     }
 
     // returns current id

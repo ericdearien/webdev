@@ -17,12 +17,37 @@ module.exports.RegisterPage = function (req, res) {
     fs.createReadStream(path.join(__dirname, '../public/pages/register.html')).pipe(res);
 }
 
-module.exports.Login = async function (req, res) {
+module.exports.Login = function (req, res) {
     try {
         console.log('trying to log in')
         console.log(req.body)
-        const user = await User.login(req.body.username, req.body.password);
-        res.send({ ...user, password: undefined });
+        let user = User.login(req.body.username, req.body.password)
+        res.send(user);
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.getUserID = async function (req, res) {
+    try {
+        console.log('trying to find user ID')
+        console.log(req.body)
+        id = await User.getUserIdFromUsername(req.body.username)
+        console.log('getUserID:', id)
+        res.send({ user_id: id, username: req.body.username })
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.CreateCard = async function (req, res) {
+    try {
+        console.log('creating new card')
+        console.log(req.body)
+        const card = await Card.newCard(req.body.front, req.body.back, req.body.deckID);
+        res.send(card);
     } catch (error) {
         console.log(error.message)
         res.status(401).send({ message: error.message });
@@ -59,21 +84,20 @@ module.exports.LandingPage = function (req, res) {
     fs.createReadStream(path.join(__dirname, '../public/pages/landing.html')).pipe(res);
 }
 
-module.exports.RegisterNewUser = function (req, res) {
-    //TODO: make this connect to the database, for now just creates a new user object
-    res.writeHead(200, { 'Content-Type': 'json' });
-
-    //the user id will not be a static 10 after database is created
-    newUser = User(10, req.body.email, req.body.pword);
-}
-
 module.exports.ViewDecks = function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream(path.join(__dirname, '../public/pages/decks.html')).pipe(res);
 }
 
-module.exports.GetMyDecks = function (req, res) {
-    //TODO: this should return a json blob with all of the decks this user owns
+module.exports.GetAllDecks = async function (req, res) {
+    console.log('getting all decks')
+    try {
+        let decks = await Deck.getMyDecks(req.body.id);
+        console.log('sending decks:', decks)
+        res.send(decks)
+    } catch (error) {
+        res.status(401).send({ message: error.message });
+    }
 }
 
 module.exports.Lessons = function (req, res) {
@@ -93,16 +117,22 @@ module.exports.Study = function (req, res) {
 
 module.exports.CreateDeck = function (req, res) {
     try {
-        Deck.newDeck(req.body.name, req.body.date);
+        console.log(req.body.title, req.body.date)
+        Deck.newDeck(req.body.title, req.body.date, req.body.id);
     } catch (error) {
         res.status(401).send({ message: error.message });
     }
 }
+
 module.exports.GetDeck = function (req, res) {
-    //This will eventually be connected to the db to create a deck
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    fs.createReadStream(path.join(__dirname, '../public/pages/decks.html')).pipe(res);
+    try {
+        let deck = Deck.GetDeck(req.body.deck_id);
+        res.send(deck)
+    } catch (error) {
+        res.status(401).send({ message: error.message });
+    }
 }
+
 module.exports.DeleteUser = function (req, res) {
     try {
         User.deleteUser(req.body.userId);
@@ -110,7 +140,6 @@ module.exports.DeleteUser = function (req, res) {
         res.status(401).send({ message: error.message });
     }
 }
-
 
 module.exports.LoginPage = function (req, res) {
     //This will eventually be connected to the db to create a deck
@@ -120,7 +149,7 @@ module.exports.LoginPage = function (req, res) {
 
 module.exports.DeleteDeck = function (req, res) {
     try {
-        Deck.DeleteDeck(req.body.userId);
+        Deck.DeleteDeck(req.body.deckID);
     } catch (error) {
         res.status(401).send({ message: error.message });
     }

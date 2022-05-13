@@ -17,6 +17,9 @@ class LoggedNav extends HTMLElement {
                 <li>
                   <a href="/viewdecks">My Decks</a>
                 </li>   
+                <li>
+                  <a href="/lessons">Lessons</a>
+                </li>   
                 <li onclick='logout()'>
                   <a>Logout</a>
                 </li>

@@ -6,6 +6,7 @@ function logout() {
 }
 
 function setCurrentUser(user) {
+    console.log(user)
     localStorage.setItem('user', JSON.stringify(user));
 }
 
@@ -18,19 +19,28 @@ function getCurrentUser() {
 }
 
 
+console.log(getCurrentUser())
+
 function login(e) {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     fetchData('/login', { username: username, password: password }, 'POST')
         .then((data) => {
+            console.log(data)
             if (!data.message) {
-                setCurrentUser(data);
-                window.location.href = "/home";
+                window.location.href = "/home?" + data.message;
             }
         })
         .catch((error) => {
             console.log(error.message);
         });
+
+    fetchData('/user/userID', { username: username }, 'post').then((data) => {
+        console.log(data)
+        setCurrentUser(data)
+    }).catch((error) => {
+        console.log(error.message)
+    })
 }
 
 function register(e) {
@@ -46,6 +56,35 @@ function register(e) {
         .catch((error) => {
             console.log(error.message);
         });
+}
+
+function enterNewCard(e) {
+    const deckID = document.getElementById('deck-id').value
+    const front = document.getElementById('card-front').value
+    const back = document.getElementById('card-back').value
+    fetchData('/newcard', { deckID: deckID, front: front, back: back }, "POST")
+        .then((data) => {
+            resetCardInput(data)
+        })
+        .catch((error) => {
+            console.log(error.message);
+        });
+}
+
+function newDeck(name, date, id) {
+    fetchData('/createDeck', { title: name, date: date, id: id }, "POST")
+        .then((data) => {
+            console.log(`deck ${name} created`)
+        })
+        .catch((error) => {
+            console.log('ERROR:')
+            console.log(name, date)
+            console.log(error.message);
+        });
+}
+
+function resetCardInput(data) {
+    //TODO:
 }
 
 async function fetchData(url = '', data = {}, methodType) {
@@ -67,4 +106,8 @@ async function fetchData(url = '', data = {}, methodType) {
     } else {
         throw await response.json();
     }
+}
+
+function Advance(diff) {
+    console.log(diff)
 }
