@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../components/loggedNav.js" defer></script>
+    <script src="https://kit.fontawesome.com/0525dc555c.js" crossorigin="anonymous"></script>
     <script src="../components/brand.js" type="text/javascript" defer></script>
-    <script src="../classes/dom.js" type="text/javascript" defer></script>
+    <script src="../classes/dom.js" type="text/javascript"></script>
     <script src="../classes/main.js" type="text/javascript"></script>
-    <script src="../classes/lesson.js" type="text/javascript"></script>
+    <script src="../classes/lesson.js" type="text/javascript" defer></script>
     <link rel="stylesheet" href="../styles/styles.css" type="text/css">
     <title>Lessons</title>
 </head>
@@ -17,8 +18,8 @@
 <body>
     <loggednav-component></loggednav-component>
     <main>
-        <div id='lesson-table' class="table-container">
-            <table class="general-table">
+        <div class="table-container">
+            <table id='lesson-table' class="general-table">
                 <thead>
                     <tr>
                         <th>Lesson Name</th>

@@ -8,6 +8,7 @@ const con = mysql.createPool({
   database: process.env.MYSQL_DB
 });
 
+
 const query = (sql, binding) => {
   return new Promise((resolve, reject) => {
     con.query(sql, binding, (err, result, fields) => {

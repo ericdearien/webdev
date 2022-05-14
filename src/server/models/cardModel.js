@@ -22,7 +22,7 @@ async function createTable() {
 createTable();
 
 async function getcardsfor(id) {
-  const sql = `SELECT * FROM card WHERE parent_dec_id = ${id}`
+  const sql = `SELECT * FROM card WHERE parent_deck_id = ${id}`
   return await con.query(sql)
 }
 
@@ -44,9 +44,9 @@ async function newcard(front, back, id) {
   var today = new Date();
   var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
 
-  const sql = `INSERT INTO card (front, back, parent_deck_id, next_due) VALUES ("${front}", "${back}", ${id}, "${td}")`;
+  const sql = `INSERT INTO card (front, back, parent_deck_id, next_due) VALUES ("?", "?", ${id}, "${td}")`;
 
-  const insert = await con.query(sql);
+  const insert = await con.query(sql, [front, back]);
 }
 
 async function deletecard(id) {
@@ -58,9 +58,9 @@ async function deletecard(id) {
 
 async function editcard(front, back, id) {
   const sql = `UPDATE card 
-      set front = "${front}", back = "${front}" where card_id = ${id}
+      set front = "?", back = "?" where card_id = ${id}
     `;
-  await con.query(sql);
+  await con.query(sql, [front, back]);
 }
 
 module.exports = { getcardsfor, deletecard, editcard, newcard, study };

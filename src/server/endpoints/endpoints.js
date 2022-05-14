@@ -11,10 +11,19 @@ module.exports.Home = function (req, res) {
     fs.createReadStream(path.join(__dirname, '../public/pages/home.html')).pipe(res);
 }
 
-
 module.exports.RegisterPage = function (req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream(path.join(__dirname, '../public/pages/register.html')).pipe(res);
+}
+
+module.exports.ReadLesson = function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    fs.createReadStream(path.join(__dirname, '../public/pages/read.html')).pipe(res);
+}
+
+module.exports.EditLessonPage = function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    fs.createReadStream(path.join(__dirname, '../public/pages/edit_lesson.html')).pipe(res);
 }
 
 module.exports.Login = function (req, res) {
@@ -66,6 +75,18 @@ module.exports.CreateCard = async function (req, res) {
     }
 }
 
+module.exports.GetAllCardsFor = async function (req, res) {
+    try {
+        console.log('trying to get all cards for deck '+ req.body.deck_id)
+        const cards = await Card.getcardsfor(req.body.deck_id);
+        
+        res.send(cards);
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
 module.exports.UpdateCard = async function (req, res) {
     try {
         console.log('creating new card')
@@ -102,11 +123,22 @@ module.exports.Register = function (req, res) {
     }
 }
 
-module.exports.GetAllLessons = function (req, res) {
+module.exports.GetAllLessons = async function (req, res) {
     try {
         console.log('trying to get all lessons')
-        const lessons = Lesson.getLessons();
+        const lessons = await Lesson.getAllLessons();
         res.send(lessons)
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.GetSingleLesson = async function (req, res) {
+    try {
+        console.log('trying to get a lesson with id ' + req.body.lesson_id)
+        const lesson = await Lesson.getLesson(req.body.lesson_id);
+        res.send(lesson[0])
     } catch (error) {
         console.log(error.message)
         res.status(401).send({ message: error.message });
@@ -120,13 +152,28 @@ module.exports.CreateLesson = function (req, res) {
         var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
         let lesson = {
             title: req.body.title,
-            body: req.body.text.replace('\"', '\''),
+            body: req.body.text,
             created_by: req.body.created_by,
             created_on: td
         }
         console.log('trying to create lesson')
+        console.log(lesson)
         Lesson.createLesson(lesson);
-        res.send(lessons)
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.Updatelesson = function (req, res) {
+    try {
+        let lesson = {
+            title: req.body.title,
+            body: req.body.text,
+            lesson_id: req.body.lesson_id
+        }
+        console.log('trying to update lesson')
+        Lesson.editLesson(lesson);
     } catch (error) {
         console.log(error.message)
         res.status(401).send({ message: error.message });
@@ -227,6 +274,15 @@ module.exports.DeleteDeck = function (req, res) {
         res.status(401).send({ message: error.message });
     }
 }
+
+module.exports.DeleteLesson = function (req, res) {
+    try {
+        Lesson.deleteLesson(req.body.lesson_id);
+    } catch (error) {
+        res.status(401).send({ message: error.message });
+    }
+}
+
 module.exports.UpdateUser = function (req, res) {
     try {
         const user = User.editUser(req.body);

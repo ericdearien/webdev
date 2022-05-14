@@ -1,3 +1,7 @@
+let paramString = window.location.href.split('?')[1];
+let pair = paramString.split('=')
+let deck_id = pair[1]
+
 function RevealModal(mid, cid, bid) {
   // Get the modal
   var modal = document.getElementById(mid);
@@ -28,7 +32,7 @@ function RevealModal(mid, cid, bid) {
 
 var newRows = 0
 
-function AppendTableRow(tid, data, num_due) {
+function AppendTableRow(tid, data) {
   var table = document.getElementById(tid);
   var newRow = table.insertRow(-1);
 
@@ -57,7 +61,6 @@ function AppendTableRow(tid, data, num_due) {
   } else {
     lastStudied.innerHTML = '-'
   }
-
 
   var dateCell = newRow.insertCell(-1);
   dateCell.innerHTML = data.created_on.substring(0, 10)
@@ -97,7 +100,6 @@ function createNewDeck(id) {
   c8.innerHTML = `<a href="./deck/update?deckID=${ndid}"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
   var c9 = row.insertCell(-1);
   c9.innerHTML = `<a href='' onclick='deleteDeck(${ndid}><i class="fa fa-trash-o" aria-hidden="true"></a>`;
-
 }
 
 function deleteDeck(id) {
@@ -105,4 +107,72 @@ function deleteDeck(id) {
   window.location.reload();
 }
 
+var newLessonRows = 0
 
+function AppendLessonTableRow(tid, lesson) {
+  var table = document.getElementById(tid);
+  var newRow = table.insertRow(-1);
+
+  newRow.id = lesson.lesson_id
+
+  var nameCell = newRow.insertCell(-1);
+  nameCell.innerHTML = lesson.title
+  var madeby = newRow.insertCell(-1);
+  madeby.innerHTML = lesson.created_by
+
+  var next = newRow.insertCell(-1);
+  next.innerHTML = lesson.created_on.substring(0, 10)
+
+  var c7 = newRow.insertCell(-1);
+  c7.innerHTML = `<a href="./read?lessonID=${lesson.lesson_id}"><i class="fa fa-book-open" aria-hidden="true">`;
+  var c8 = newRow.insertCell(-1);
+  if (getCurrentUser().username == lesson.created_by) {
+    c8.innerHTML = `<a href="./lesson/editPage?lessonID=${lesson.lesson_id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
+  }
+  var c9 = newRow.insertCell(-1);
+  if (getCurrentUser().username == lesson.created_by) {
+    c9.innerHTML = `<a href='' onclick='deleteLesson(${lesson.lesson_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`; 
+  }
+}
+
+var newCardRows = 0
+
+function AppendCardTableRow(tid, card) {
+  var table = document.getElementById(tid);
+  var newRow = table.insertRow(-1);
+
+  if (!card) {
+    newRow.id = "newRow" + newRows;
+    var fCell = newRow.insertCell(-1);
+    fCell.innerHTML = `<input type="text" class="general-text-input" id="input${newCardRows}" placeholder="Lorem Ipsum...">`;
+    newRow.id = "newRow" + newRows;
+    var bCell = newRow.insertCell(-1);
+    bCell.innerHTML = `<input type="text" class="general-text-input" id="input${newCardRows}" placeholder="Lorem Ipsum...">`;
+
+    var subCell = newRow.insertCell(-1);
+    subCell.innerHTML = `<button class="table-button" onclick="newCard(${newCardRows++})">Create</button>`;
+    subCell.colSpan = "8";
+    return;
+  }
+
+  newRow.id = lesson.lesson_id
+
+  var nameCell = newRow.insertCell(-1);
+  nameCell.innerHTML = lesson.title
+  var madeby = newRow.insertCell(-1);
+  madeby.innerHTML = lesson.created_by
+
+  var next = newRow.insertCell(-1);
+  next.innerHTML = lesson.created_on.substring(0, 10)
+
+  var c7 = newRow.insertCell(-1);
+  c7.innerHTML = `<a href="./read?lessonID=${lesson.lesson_id}"><i class="fa fa-book-open" aria-hidden="true">`;
+  var c8 = newRow.insertCell(-1);
+  if (getCurrentUser().username == lesson.created_by) {
+    c8.innerHTML = `<a href="./lesson/editPage?lessonID=${lesson.lesson_id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
+  }
+  var c9 = newRow.insertCell(-1);
+  if (getCurrentUser().username == lesson.created_by) {
+    c9.innerHTML = `<a href='' onclick='deleteLesson(${lesson.lesson_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`; 
+  }
+}
