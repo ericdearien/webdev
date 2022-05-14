@@ -13,6 +13,8 @@ router.get("/study", endpoints.Study);
 router.get("/deck/get", endpoints.GetDeck);
 router.get("/registerPage", endpoints.RegisterPage);
 router.get("/deck/update", endpoints.EditDeckPage);
+router.get("/lesson/all", endpoints.GetAllLessons);
+router.get("/lesson/newPage", endpoints.NewLessonPage);
 
 //POST
 router.post("/login", endpoints.Login);
@@ -22,7 +24,8 @@ router.post("/logout", endpoints.Logout);
 router.post("/createDeck", endpoints.CreateDeck);
 router.post("/newcard", endpoints.CreateCard);
 router.post("/user/userID", endpoints.getUserID);
-router.post('/deck/numDue', endpoints.NumDue)
+router.post('/deck/numDue', endpoints.NumDue);
+router.post('/lesson/create', endpoints.CreateLesson);
 
 //DELETE
 router.delete("/user/delete", endpoints.DeleteUser);

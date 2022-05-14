@@ -34,7 +34,7 @@ module.exports.NumDue = async function (req, res) {
         console.log('trying to find num due')
         console.log(req.body)
         let numDue = Deck.getNumDue(req.body.username, req.body.password)
-        res.send({numDue});
+        res.send({ numDue });
     } catch (error) {
         console.log(error.message)
         res.status(401).send({ message: error.message });
@@ -96,6 +96,37 @@ module.exports.Register = function (req, res) {
         console.log(req.body)
         const user = User.register(req.body);
         res.send({ ...user, password: undefined })
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.GetAllLessons = function (req, res) {
+    try {
+        console.log('trying to get all lessons')
+        const lessons = Lesson.getLessons();
+        res.send(lessons)
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.CreateLesson = function (req, res) {
+    try {
+        var today = new Date();
+
+        var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+        let lesson = {
+            title: req.body.title,
+            body: req.body.text.replace('\"', '\''),
+            created_by: req.body.created_by,
+            created_on: td
+        }
+        console.log('trying to create lesson')
+        Lesson.createLesson(lesson);
+        res.send(lessons)
     } catch (error) {
         console.log(error.message)
         res.status(401).send({ message: error.message });
@@ -181,6 +212,12 @@ module.exports.LoginPage = function (req, res) {
     //This will eventually be connected to the db to create a deck
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream(path.join(__dirname, '../public/pages/login.html')).pipe(res);
+}
+
+module.exports.NewLessonPage = function (req, res) {
+    //This will eventually be connected to the db to create a deck
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    fs.createReadStream(path.join(__dirname, '../public/pages/create_lesson.html')).pipe(res);
 }
 
 module.exports.DeleteDeck = function (req, res) {

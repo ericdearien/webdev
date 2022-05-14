@@ -56,7 +56,7 @@ function register(e) {
             console.log(error.message);
         });
 
-    
+
 
 }
 
@@ -82,6 +82,22 @@ function newDeck(name, date, id) {
         .catch((error) => {
             console.log('ERROR:')
             console.log(name, date)
+            console.log(error.message);
+        });
+    window.location.reload()
+}
+
+
+function newLesson() {
+    let title = document.getElementById('lesson-title').value
+    let text = document.getElementById('editor').innerHTML
+    fetchData('/lesson/create', { title: title, text: text, created_by: getCurrentUser().username}, "POST")
+        .then((data) => {
+            console.log(`lesson ${title} created`)
+
+        })
+        .catch((error) => {
+            console.log('ERROR:')
             console.log(error.message);
         });
     window.location.reload()

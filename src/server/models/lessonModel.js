@@ -35,7 +35,7 @@ async function getLesson(lesson) {
 
 async function createLesson(lesson) {
     const sql = `INSERT INTO lesson (title, body, created_by, created_on)
-      VALUES ("${lesson.title}", "${lesson.body}", "${lesson.created_by}", "${lesson.created_on}")
+      VALUES ("${lesson.title}", "${lesson.body}", \`${lesson.created_by}\`, "${lesson.created_on}")
     `;
 
     const insert = await con.query(sql);
