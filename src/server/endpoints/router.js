@@ -33,12 +33,12 @@ router.post("/deck/allCards", endpoints.GetAllCardsFor);
 //DELETE
 router.delete("/user/delete", endpoints.DeleteUser);
 router.delete("/deck/delete", endpoints.DeleteDeck);
-// router.delete('/card/delete', endpoints.DeleteCard);
+router.delete('/card/delete', endpoints.DeleteCard);
 router.delete('/lesson/delete', endpoints.DeleteLesson);
 
 //PUT
 // router.put("/user/update", endpoints.UpdateUser);   update user not needed
-// router.put("/deck/updateVals", endpoints.Updatedeck)
+// router.put("/deck/updateVals", endpoints.Updatedeck) not needed anymore
 router.put("/lesson/update", endpoints.Updatelesson)
 router.put("/card/update", endpoints.UpdateCard)
 router.put("/card/study", endpoints.StudyCard)

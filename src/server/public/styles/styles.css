@@ -302,6 +302,10 @@ nav ul {
     cursor: pointer;
 }
 
+a {
+    cursor: pointer;
+}
+
 .container button:hover, .container button:active, .container button:focus {
     background: #43A047;
 }

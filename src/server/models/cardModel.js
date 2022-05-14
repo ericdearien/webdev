@@ -39,7 +39,7 @@ async function study(id, rating) {
 
 async function newcard(front, back, id) {
   console.log('creating new card:')
-  console.log(front, date, id)
+  console.log(front, back, id)
 
   var today = new Date();
   var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
@@ -56,7 +56,7 @@ async function deletecard(id) {
   await con.query(sql);
 }
 
-async function editcard(front, back, id) {
+async function editcard(front, back, id, deck_id) {
   const sql = `UPDATE card 
       set front = "?", back = "?" where card_id = ${id}
     `;

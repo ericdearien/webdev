@@ -58,16 +58,16 @@ function register(e) {
 }
 
 function newCard(id) {
-    const deckID = document.getElementById('deck-id').value
-    const front = document.getElementById('card-front').value
-    const back = document.getElementById('card-back').value
-    fetchData('/newcard', { deckID: deckID, front: front, back: back }, "POST")
+    const front = document.getElementById('finput' + id).value
+    const back = document.getElementById('binput' + id).value
+    fetchData('/newcard', { deckID: url_deck_id, front: front, back: back }, "POST")
         .then((data) => {
             resetCardInput(data)
         })
         .catch((error) => {
             console.log(error.message);
         });
+    window.location.reload()
 }
 
 function newDeck(name, date, id) {
@@ -88,7 +88,7 @@ function newDeck(name, date, id) {
 function newLesson() {
     let title = document.getElementById('lesson-title').value
     let text = quill.getContents()
-    fetchData('/lesson/create', { title: title, text: JSON.stringify(text), created_by: getCurrentUser().username}, "POST")
+    fetchData('/lesson/create', { title: title, text: JSON.stringify(text), created_by: getCurrentUser().username }, "POST")
         .then((data) => {
             console.log(`lesson ${title} created`)
         })
@@ -102,7 +102,7 @@ function newLesson() {
 function updateLesson(id) {
     let title = document.getElementById('title').value
     let text = quill.getContents()
-    fetchData('/lesson/update', { title: title, text: JSON.stringify(text), lesson_id: id}, "PUT")
+    fetchData('/lesson/update', { title: title, text: JSON.stringify(text), lesson_id: id }, "PUT")
         .then((data) => {
             console.log(`lesson ${title} created`)
         })
@@ -115,9 +115,36 @@ function updateLesson(id) {
 
 
 function deleteLesson(id) {
-    fetchData('/lesson/delete', { lesson_id: id}, "DELETE")
+    fetchData('/lesson/delete', { lesson_id: id }, "DELETE")
         .then((data) => {
             console.log(`lesson ${id} deleted`)
+        })
+        .catch((error) => {
+            console.log('ERROR:')
+            console.log(error.message);
+        });
+    window.location = '/lessons'
+}
+
+function updateCard(id) {
+    console.log('HELLO')
+    let front = document.getElementById('updatefront' + id).value
+    let back = document.getElementById('updateback' + id).value
+    fetchData('/card/update', { card_id: id, front: front, back: back, deck_id: url_deck_id }, "PUT")
+        .then((data) => {
+            console.log(`card ${id} updated`)
+        })
+        .catch((error) => {
+            console.log('ERROR:')
+            console.log(error.message);
+        });
+    window.location.reload()
+}
+
+function deleteCard(id) {
+    fetchData('/card/delete', { card_id: id }, "DELETE")
+        .then((data) => {
+            console.log(`card ${id} deleted`)
         })
         .catch((error) => {
             console.log('ERROR:')

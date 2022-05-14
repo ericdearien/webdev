@@ -75,11 +75,21 @@ module.exports.CreateCard = async function (req, res) {
     }
 }
 
+module.exports.DeleteCard = async function (req, res) {
+    try {
+        console.log('deleting card')
+        const card = await Card.deletecard(req.body.card_id);
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
 module.exports.GetAllCardsFor = async function (req, res) {
     try {
-        console.log('trying to get all cards for deck '+ req.body.deck_id)
+        console.log('trying to get all cards for deck ' + req.body.deck_id)
         const cards = await Card.getcardsfor(req.body.deck_id);
-        
+
         res.send(cards);
     } catch (error) {
         console.log(error.message)
@@ -91,7 +101,7 @@ module.exports.UpdateCard = async function (req, res) {
     try {
         console.log('creating new card')
         console.log(req.body)
-        const card = await Card.editcard(req.body.front, req.body.back, req.body.deckID);
+        const card = await Card.editcard(req.body.front, req.body.back, req.body.card_id, req.body.deck_id);
         res.send(card);
     } catch (error) {
         console.log(error.message)

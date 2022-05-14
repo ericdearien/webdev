@@ -1,6 +1,6 @@
 let paramString = window.location.href.split('?')[1];
 let pair = paramString.split('=')
-let deck_id = pair[1]
+let url_deck_id = pair[1]
 
 function RevealModal(mid, cid, bid) {
   // Get the modal
@@ -131,7 +131,7 @@ function AppendLessonTableRow(tid, lesson) {
   }
   var c9 = newRow.insertCell(-1);
   if (getCurrentUser().username == lesson.created_by) {
-    c9.innerHTML = `<a href='' onclick='deleteLesson(${lesson.lesson_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`; 
+    c9.innerHTML = `<a href='' onclick='deleteLesson(${lesson.lesson_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`;
   }
 }
 
@@ -144,10 +144,10 @@ function AppendCardTableRow(tid, card) {
   if (!card) {
     newRow.id = "newRow" + newRows;
     var fCell = newRow.insertCell(-1);
-    fCell.innerHTML = `<input type="text" class="general-text-input" id="input${newCardRows}" placeholder="Lorem Ipsum...">`;
+    fCell.innerHTML = `<input type="text" class="general-text-input" id="finput${newCardRows}" placeholder="Lorem Ipsum...">`;
     newRow.id = "newRow" + newRows;
     var bCell = newRow.insertCell(-1);
-    bCell.innerHTML = `<input type="text" class="general-text-input" id="input${newCardRows}" placeholder="Lorem Ipsum...">`;
+    bCell.innerHTML = `<input type="text" class="general-text-input" id="binput${newCardRows}" placeholder="Lorem Ipsum...">`;
 
     var subCell = newRow.insertCell(-1);
     subCell.innerHTML = `<button class="table-button" onclick="newCard(${newCardRows++})">Create</button>`;
@@ -155,24 +155,50 @@ function AppendCardTableRow(tid, card) {
     return;
   }
 
-  newRow.id = lesson.lesson_id
+  newRow.id = 'cardrow' + card.card_id
 
   var nameCell = newRow.insertCell(-1);
-  nameCell.innerHTML = lesson.title
+  nameCell.innerHTML = card.front
+  nameCell.id = 'front' + card.card_id
   var madeby = newRow.insertCell(-1);
-  madeby.innerHTML = lesson.created_by
+  madeby.innerHTML = card.back
+  madeby. id = 'back' + card.card_id
 
   var next = newRow.insertCell(-1);
-  next.innerHTML = lesson.created_on.substring(0, 10)
+  if (card.created_on) {
+    next.innerHTML = card.created_on.substring(0, 10)
+  } else {
+    next.innerHTML = '-'
+  }
 
-  var c7 = newRow.insertCell(-1);
-  c7.innerHTML = `<a href="./read?lessonID=${lesson.lesson_id}"><i class="fa fa-book-open" aria-hidden="true">`;
+  var next = newRow.insertCell(-1);
+  if (card.created_on) {
+    next.innerHTML = card.num_studied
+  } else {
+    next.innerHTML = '-'
+  }
+
   var c8 = newRow.insertCell(-1);
-  if (getCurrentUser().username == lesson.created_by) {
-    c8.innerHTML = `<a href="./lesson/editPage?lessonID=${lesson.lesson_id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
-  }
+  c8.innerHTML = `<a onclick='editCard(${card.card_id})'><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
+
   var c9 = newRow.insertCell(-1);
-  if (getCurrentUser().username == lesson.created_by) {
-    c9.innerHTML = `<a href='' onclick='deleteLesson(${lesson.lesson_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`; 
-  }
+  c9.innerHTML = `<a href='' onclick='deleteCard(${card.card_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`;
+
+}
+
+function editCard(id) {
+  console.log(id)
+  let front = document.getElementById('front' + id).innerHTML
+  let back = document.getElementById('back' + id).innerHTML
+  let row = document.getElementById('cardrow' + id)
+
+  row.innerHTML = ""
+
+  let c1 = row.insertCell(-1)
+  c1.innerHTML = `<input class="general-text-input" id='updatefront${id}' value="${front}">`
+  let c2 = row.insertCell(-1)
+  c2.innerHTML = `<input class="general-text-input" id='updateback${id}' value="${back}">`
+  
+  let c3 = row.insertCell(-1)
+  c3.innerHTML = `<button class="table-button" onclick="updateCard(${id})">Update</button>`
 }
