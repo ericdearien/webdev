@@ -6,22 +6,23 @@ const router = express();
 router.get("/", endpoints.Home);
 router.get("/loginPage", endpoints.LoginPage);
 router.get("/home", endpoints.LandingPage);
-router.get("/account", endpoints.Account);
+// router.get("/account", endpoints.Account);
 router.get("/viewdecks", endpoints.ViewDecks);
 router.get("/lessons", endpoints.Lessons);
 router.get("/study", endpoints.Study);
 router.get("/deck/get", endpoints.GetDeck);
-router.get("/deck/getAll", endpoints.GetAllDecks);
 router.get("/registerPage", endpoints.RegisterPage);
 router.get("/deck/update", endpoints.EditDeckPage);
 
 //POST
 router.post("/login", endpoints.Login);
+router.post("/deck/getAll", endpoints.GetAllDecks);
 router.post("/register", endpoints.Register);
 router.post("/logout", endpoints.Logout);
 router.post("/createDeck", endpoints.CreateDeck);
 router.post("/newcard", endpoints.CreateCard);
 router.post("/user/userID", endpoints.getUserID);
+router.post('/deck/numDue', endpoints.NumDue)
 
 //DELETE
 router.delete("/user/delete", endpoints.DeleteUser);
@@ -29,7 +30,11 @@ router.delete("/deck/delete", endpoints.DeleteDeck);
 // router.delete('/card/delete', endpoints.DeleteCard);
 // router.delete('/lesson/delete', endpoints.DeleteLesson);
 
-//UPDATE
-// router.post("/user/update", endpoints.UpdateUser);
+//PUT
+// router.put("/user/update", endpoints.UpdateUser);   update user not needed
+// router.put("/deck/updateVals", endpoints.Updatedeck)
+// router.put("/lesson/update", endpoints.Updatelesson)
+router.put("/card/update", endpoints.UpdateCard)
+router.put("/card/study", endpoints.StudyCard)
 
 module.exports = router; 

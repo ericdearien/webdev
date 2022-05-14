@@ -1,7 +1,7 @@
 const con = require("./dbconn");
 
 async function createTable() {
-    let sql = `CREATE TABLE IF NOT EXISTS card (
+  let sql = `CREATE TABLE IF NOT EXISTS card (
       card_id INT NOT NULL AUTO_INCREMENT,
       front TEXT,
       back TEXT,
@@ -17,44 +17,50 @@ async function createTable() {
       ON DELETE SET NULL
       ON UPDATE NO ACTION
     )`;
-    await con.query(sql);
+  await con.query(sql);
 }
 createTable();
 
+async function getcardsfor(id) {
+  const sql = `SELECT * FROM card WHERE parent_dec_id = ${id}`
+  return await con.query(sql)
+}
 
-async function getMyDecks(userId) {
-    const sql = `SELECT * FROM deck WHERE owner_id = ${userId}`
-    return await con.query(sql)
-  }
-  
-  function newDeck(name, date) {
-    const newDeck = {
-      id: decks[decks.length - 1].id + 1,
-      name: deck.name,
-      date: deck.date
-    }
-  
-    decks.push(newDeck);
-    return newDeck;
-  }
-  
-  function deleteDeck(id) {
-    let i = decks.map((deck) => deck.id).indexOf(id);
-    decks.splice(i, 1);
-    console.log(decks);
-  }
-  
-  function deckExists(name) {
-    return decks.filter((u) => u.name === name);
-  }
-  
-  function editDeck(deck) {
-    const d = deckExists(deck.name);
-    if (d.length > 0) throw ('name already in use')
-  
-    const currentDeck = decks.filter((d) => d.id === deck.id);
-    currentDeck[0].name = deck.name;
-    return currentDeck[0];
-  }
-  
-  module.exports = { getMyDecks, deleteDeck, editDeck, newDeck };
+async function study(id, rating) {
+  var today = new Date();
+  var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+  var duedate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + (today.getDate() + rating);
+
+  const sql = `UPDATE card 
+      set next_due = "${duedate}", last_studied = "${td}" where card_id = ${id}
+    `;
+  await con.query(sql);
+}
+
+async function newcard(front, back, id) {
+  console.log('creating new card:')
+  console.log(front, date, id)
+
+  var today = new Date();
+  var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+  const sql = `INSERT INTO card (front, back, parent_deck_id, next_due) VALUES ("${front}", "${back}", ${id}, "${td}")`;
+
+  const insert = await con.query(sql);
+}
+
+async function deletecard(id) {
+  const sql = `DELETE FROM card 
+      WHERE card_id = ${id}
+    `;
+  await con.query(sql);
+}
+
+async function editcard(front, back, id) {
+  const sql = `UPDATE card 
+      set front = "${front}", back = "${front}" where card_id = ${id}
+    `;
+  await con.query(sql);
+}
+
+module.exports = { getcardsfor, deletecard, editcard, newcard, study };

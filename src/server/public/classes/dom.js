@@ -26,12 +26,9 @@ function RevealModal(mid, cid, bid) {
   }
 }
 
-let deckTable = document.getElementById('deckTable')
-if (deckTable) fillOwnedDecks();
-
 var newRows = 0
 
-function AppendTableRow(tid, data) {
+function AppendTableRow(tid, data, num_due) {
   var table = document.getElementById(tid);
   var newRow = table.insertRow(-1);
 
@@ -48,32 +45,29 @@ function AppendTableRow(tid, data) {
 
   newRow.id = data.deck_id
 
-  var nameCell = newRow.insertCell(0);
+  var nameCell = newRow.insertCell(-1);
   nameCell.innerHTML = data.title
 
-  var cardsCell = newRow.insertCell(1);
+  var cardsCell = newRow.insertCell(-1);
   cardsCell.innerHTML = data.num_cards
 
-  let numDueCards
-  Deck.getDueCardNum().then((num) => {
-    numDueCards = num
-  })
+  var lastStudied = newRow.insertCell(-1);
+  if (data.last_studied) {
+    lastStudied.innerHTML = data.last_studied.substring(0, 10)
+  } else {
+    lastStudied.innerHTML = '-'
+  }
 
-  var cardsCell = newRow.insertCell(2);
-  cardsCell.innerHTML = numDueCards
 
-  var cardsCell = newRow.insertCell(3);
-  cardsCell.innerHTML = data.num_cards
+  var dateCell = newRow.insertCell(-1);
+  dateCell.innerHTML = data.created_on.substring(0, 10)
 
-  var cardsCell = newRow.insertCell(4);
-  cardsCell.innerHTML = data.num_cards
-
-  var c7 = row.insertCell(6);
+  var c7 = newRow.insertCell(-1);
   c7.innerHTML = `<a href="./study?deckID=${data.deck_id}"><i class="fa fa-graduation-cap" aria-hidden="true">`;
-  var c8 = row.insertCell(7);
+  var c8 = newRow.insertCell(-1);
   c8.innerHTML = `<a href="./deck/update?deckID=${data.deck_id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
-  var c9 = row.insertCell(8);
-  c9.innerHTML = `<a href="./deck/delete?deckID=${data.deck_id}"><i class="fa fa-trash-o" aria-hidden="true"></a>`;
+  var c9 = newRow.insertCell(-1);
+  c9.innerHTML = `<a href='' onclick='deleteDeck(${data.deck_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`;
 }
 
 function createNewDeck(id) {
@@ -82,40 +76,33 @@ function createNewDeck(id) {
   var row = document.getElementById("newRow" + id);
 
   var today = new Date();
+
   var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+  let ndid = newDeck(inp, td, getCurrentUser().user_id)
 
   row.innerHTML = "";
 
-  var c1 = row.insertCell(0);
+  var c1 = row.insertCell(-1);
   c1.innerHTML = inp;
-  var c2 = row.insertCell(1);
+  var c2 = row.insertCell(-1);
   c2.innerHTML = "0";
-  var c3 = row.insertCell(2);
-  c3.innerHTML = "0";
-  var c4 = row.insertCell(3);
+  var c4 = row.insertCell(-1);
   c4.innerHTML = "-";
-  var c6 = row.insertCell(4);
+  var c6 = row.insertCell(-1);
   c6.innerHTML = td
-  var c7 = row.insertCell(5);
-  c7.innerHTML = `<a href="./study?deckID=3"><i class="fa fa-graduation-cap" aria-hidden="true">`;
-  var c8 = row.insertCell(6);
-  c8.innerHTML = `<a href="./deck/update?deckID=3"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
-  var c9 = row.insertCell(7);
-  c9.innerHTML = `<a><i class="fa fa-trash-o" aria-hidden="true"></a>`;
+  var c7 = row.insertCell(-1);
+  c7.innerHTML = `<a href="./study?deckID=${ndid}"><i class="fa fa-graduation-cap" aria-hidden="true">`;
+  var c8 = row.insertCell(-1);
+  c8.innerHTML = `<a href="./deck/update?deckID=${ndid}"><i class="fa fa-pencil-square-o" aria-hidden="true"></a></i>`;
+  var c9 = row.insertCell(-1);
+  c9.innerHTML = `<a href='' onclick='deleteDeck(${ndid}><i class="fa fa-trash-o" aria-hidden="true"></a>`;
 
-  newDeck(inp, td, getCurrentUser().user_id)
 }
 
 function deleteDeck(id) {
-  fetchData('/deck/delete', {}, 'DELETE')
+  fetchData('/deck/delete', { id: id }, 'DELETE')
   window.location.reload();
 }
 
-function fillOwnedDecks() {
-  fetchData('/deck/getAll', { id: getCurrentUser().user_id }, 'GET').then((decks) => {
-    decks.forEach((deck) => {
-      AppendTableRow('deckTable', deck)
-    });
-  })
-}
 

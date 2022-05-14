@@ -24,6 +24,27 @@ async function getMyDecks(userId) {
   return await con.query(sql)
 }
 
+async function getNumDue(deckID) {
+  const sql = `SELECT * FROM card WHERE parent_deck_id = ${deckID}`
+  let date = new Date()
+  let now = date.now()
+
+  let cards = await con.query(sql)
+  if (cards.length == 0) {
+    console.log('no cards found')
+    return {}
+  }
+  let due = {}
+
+  cards.map((card)=>{
+    if (Date(card) < now) {
+      due.push(card)
+    }
+  })
+
+  return due
+}
+
 async function newDeck(name, date, id) {
   console.log('creating new deck:')
   console.log(name, date, id)
@@ -46,4 +67,4 @@ async function editDeck(name, id) {
   await con.query(sql);
 }
 
-module.exports = { getMyDecks, deleteDeck, editDeck, newDeck };
+module.exports = { getMyDecks, deleteDeck, editDeck, newDeck, getNumDue };

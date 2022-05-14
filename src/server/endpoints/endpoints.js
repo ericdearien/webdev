@@ -29,6 +29,18 @@ module.exports.Login = function (req, res) {
     }
 }
 
+module.exports.NumDue = async function (req, res) {
+    try {
+        console.log('trying to find num due')
+        console.log(req.body)
+        let numDue = Deck.getNumDue(req.body.username, req.body.password)
+        res.send({numDue});
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
 module.exports.getUserID = async function (req, res) {
     try {
         console.log('trying to find user ID')
@@ -46,7 +58,31 @@ module.exports.CreateCard = async function (req, res) {
     try {
         console.log('creating new card')
         console.log(req.body)
-        const card = await Card.newCard(req.body.front, req.body.back, req.body.deckID);
+        const card = await Card.newcard(req.body.front, req.body.back, req.body.deckID);
+        res.send(card);
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.UpdateCard = async function (req, res) {
+    try {
+        console.log('creating new card')
+        console.log(req.body)
+        const card = await Card.editcard(req.body.front, req.body.back, req.body.deckID);
+        res.send(card);
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
+module.exports.StudyCard = async function (req, res) {
+    try {
+        console.log('creating new card')
+        console.log(req.body)
+        const card = await Card.study(req.body.id, req.body.diff);
         res.send(card);
     } catch (error) {
         console.log(error.message)
@@ -115,7 +151,7 @@ module.exports.Study = function (req, res) {
     fs.createReadStream(path.join(__dirname, '../public/pages/study.html')).pipe(res);
 }
 
-module.exports.CreateDeck = function (req, res) {
+module.exports.CreateDeck = async function (req, res) {
     try {
         console.log(req.body.title, req.body.date)
         Deck.newDeck(req.body.title, req.body.date, req.body.id);
@@ -149,7 +185,7 @@ module.exports.LoginPage = function (req, res) {
 
 module.exports.DeleteDeck = function (req, res) {
     try {
-        Deck.DeleteDeck(req.body.deckID);
+        Deck.deleteDeck(req.body.id);
     } catch (error) {
         res.status(401).send({ message: error.message });
     }

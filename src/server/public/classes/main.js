@@ -18,7 +18,6 @@ function getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));
 }
 
-
 console.log(getCurrentUser())
 
 function login(e) {
@@ -50,12 +49,15 @@ function register(e) {
         .then((data) => {
             if (!data.message) {
                 setCurrentUser(data);
-                window.location.href = "/home";
+                window.location.href = "/loginPage";
             }
         })
         .catch((error) => {
             console.log(error.message);
         });
+
+    
+
 }
 
 function enterNewCard(e) {
@@ -75,12 +77,14 @@ function newDeck(name, date, id) {
     fetchData('/createDeck', { title: name, date: date, id: id }, "POST")
         .then((data) => {
             console.log(`deck ${name} created`)
+
         })
         .catch((error) => {
             console.log('ERROR:')
             console.log(name, date)
             console.log(error.message);
         });
+    window.location.reload()
 }
 
 function resetCardInput(data) {
@@ -108,6 +112,7 @@ async function fetchData(url = '', data = {}, methodType) {
     }
 }
 
-function Advance(diff) {
-    console.log(diff)
-}
+// async function Advance(diff, id) {
+//     console.log(diff, id)
+//     fetchData('/card/study', { id: id, diff: diff }, 'PUT')
+// }

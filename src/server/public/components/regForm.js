@@ -16,9 +16,10 @@ class RegistrationForm extends HTMLElement {
                 <input type="password" placeholder="12345..." required id='password' name="password"/>
                 <label for="repassword">Repeat Password</label>                
                 <input type="password" placeholder="12345..." required name="repassword"/>
-                <label for="dob">Date of Birth</label>
-                <input type="date" name="dob" required/>
+                
                 <button>Register</button>
+                <p class='message'>NOTE: After registration, you will be redirected to the login page to use your new login</p>
+                
                 <p class="message">Already Registered? <a href="/loginPage">Sign in</a></p>
             </form>
         </div>
