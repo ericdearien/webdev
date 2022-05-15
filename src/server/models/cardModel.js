@@ -32,9 +32,14 @@ async function study(id, rating) {
   var duedate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + (today.getDate() + rating);
 
   const sql = `UPDATE card 
-      set next_due = "${duedate}", last_studied = "${td}" where card_id = ${id}
+      set next_due = DATE_ADD(next_due, INTERVAL ${rating} DAY), last_studied = "${td}", num_studied = num_studied + 1 where card_id = ${id}
     `;
   await con.query(sql);
+}
+
+async function getDueCardsFor(id) {
+  const sql = `SELECT * FROM card WHERE next_due <= CURDATE() and parent_deck_id = ${id};`
+  return await con.query(sql)
 }
 
 async function newcard(front, back, id) {
@@ -44,9 +49,10 @@ async function newcard(front, back, id) {
   var today = new Date();
   var td = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
 
-  const sql = `INSERT INTO card (front, back, parent_deck_id, next_due) VALUES ("?", "?", ${id}, "${td}")`;
-
+  const sql = `INSERT INTO card (front, back, parent_deck_id, next_due, num_studied) VALUES ("?", "?", ${id}, "${td}", 0)`;
   const insert = await con.query(sql, [front, back]);
+  const sql2 = `UPDATE deck SET num_cards = num_cards + 1 where deck_id = ${id}`;
+  await con.query(sql2)
 }
 
 async function deletecard(id) {
@@ -54,6 +60,8 @@ async function deletecard(id) {
       WHERE card_id = ${id}
     `;
   await con.query(sql);
+  const sql2 = `UPDATE deck SET num_cards = num_cards - 1 where deck_id = ${id}`;
+  await con.query(sql2)
 }
 
 async function editcard(front, back, id, deck_id) {
@@ -63,4 +71,4 @@ async function editcard(front, back, id, deck_id) {
   await con.query(sql, [front, back]);
 }
 
-module.exports = { getcardsfor, deletecard, editcard, newcard, study };
+module.exports = { getcardsfor, deletecard, editcard, newcard, study, getDueCardsFor };

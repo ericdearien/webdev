@@ -97,6 +97,17 @@ module.exports.GetAllCardsFor = async function (req, res) {
     }
 }
 
+module.exports.GetAllDueCardsFor = async function (req, res) {
+    try {
+        console.log('trying to get all due cards for deck ' + req.body.deck_id)
+        const cards = await Card.getDueCardsFor(req.body.deck_id);
+        res.send(cards);
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).send({ message: error.message });
+    }
+}
+
 module.exports.UpdateCard = async function (req, res) {
     try {
         console.log('creating new card')
@@ -111,10 +122,10 @@ module.exports.UpdateCard = async function (req, res) {
 
 module.exports.StudyCard = async function (req, res) {
     try {
-        console.log('creating new card')
+        console.log('studying card')
         console.log(req.body)
         const card = await Card.study(req.body.id, req.body.diff);
-        res.send(card);
+        res.send({msg:'done'});
     } catch (error) {
         console.log(error.message)
         res.status(401).send({ message: error.message });

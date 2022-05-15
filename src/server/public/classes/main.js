@@ -153,10 +153,6 @@ function deleteCard(id) {
     window.location = '/lessons'
 }
 
-function resetCardInput(data) {
-    //TODO:
-}
-
 async function fetchData(url = '', data = {}, methodType) {
     const response = await fetch(`http://localhost:10000${url}`, {
         method: methodType, // *GET, POST, PUT, DELETE, etc.
@@ -177,8 +173,3 @@ async function fetchData(url = '', data = {}, methodType) {
         throw await response.json();
     }
 }
-
-// async function Advance(diff, id) {
-//     console.log(diff, id)
-//     fetchData('/card/study', { id: id, diff: diff }, 'PUT')
-// }

@@ -1,7 +1,11 @@
-let paramString = window.location.href.split('?')[1];
-let pair = paramString.split('=')
-let url_deck_id = pair[1]
-
+let url_deck_id;
+try {
+  let paramString = window.location.href.split('?')[1];
+  let pair = paramString.split('=')
+  url_deck_id = pair[1]
+} catch (error) {
+  
+}
 function RevealModal(mid, cid, bid) {
   // Get the modal
   var modal = document.getElementById(mid);
@@ -35,7 +39,7 @@ var newRows = 0
 function AppendTableRow(tid, data) {
   var table = document.getElementById(tid);
   var newRow = table.insertRow(-1);
-
+  console.log(newRows)
   if (!data) {
     newRow.id = "newRow" + newRows;
     var inputCell = newRow.insertCell(0);
@@ -142,10 +146,10 @@ function AppendCardTableRow(tid, card) {
   var newRow = table.insertRow(-1);
 
   if (!card) {
-    newRow.id = "newRow" + newRows;
+    newRow.id = "newRow" + newCardRows;
     var fCell = newRow.insertCell(-1);
     fCell.innerHTML = `<input type="text" class="general-text-input" id="finput${newCardRows}" placeholder="Lorem Ipsum...">`;
-    newRow.id = "newRow" + newRows;
+    newRow.id = "newRow" + newCardRows;
     var bCell = newRow.insertCell(-1);
     bCell.innerHTML = `<input type="text" class="general-text-input" id="binput${newCardRows}" placeholder="Lorem Ipsum...">`;
 
@@ -162,17 +166,17 @@ function AppendCardTableRow(tid, card) {
   nameCell.id = 'front' + card.card_id
   var madeby = newRow.insertCell(-1);
   madeby.innerHTML = card.back
-  madeby. id = 'back' + card.card_id
+  madeby.id = 'back' + card.card_id
 
   var next = newRow.insertCell(-1);
-  if (card.created_on) {
-    next.innerHTML = card.created_on.substring(0, 10)
+  if (card.last_studied) {
+    next.innerHTML = card.last_studied.substring(0, 10)
   } else {
     next.innerHTML = '-'
   }
 
   var next = newRow.insertCell(-1);
-  if (card.created_on) {
+  if (card.num_studied) {
     next.innerHTML = card.num_studied
   } else {
     next.innerHTML = '-'
@@ -183,7 +187,6 @@ function AppendCardTableRow(tid, card) {
 
   var c9 = newRow.insertCell(-1);
   c9.innerHTML = `<a href='' onclick='deleteCard(${card.card_id})'><i class="fa fa-trash-o" aria-hidden="true"></a>`;
-
 }
 
 function editCard(id) {
@@ -198,7 +201,7 @@ function editCard(id) {
   c1.innerHTML = `<input class="general-text-input" id='updatefront${id}' value="${front}">`
   let c2 = row.insertCell(-1)
   c2.innerHTML = `<input class="general-text-input" id='updateback${id}' value="${back}">`
-  
+
   let c3 = row.insertCell(-1)
   c3.innerHTML = `<button class="table-button" onclick="updateCard(${id})">Update</button>`
 }

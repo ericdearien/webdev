@@ -29,6 +29,7 @@ router.post('/deck/numDue', endpoints.NumDue);
 router.post('/lesson/create', endpoints.CreateLesson);
 router.post("/lesson/all", endpoints.GetAllLessons);
 router.post("/deck/allCards", endpoints.GetAllCardsFor);
+router.post("/deck/allDueCards", endpoints.GetAllDueCardsFor);
 
 //DELETE
 router.delete("/user/delete", endpoints.DeleteUser);
